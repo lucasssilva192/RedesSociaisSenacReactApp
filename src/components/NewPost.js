@@ -1,8 +1,11 @@
 import React, { useRef, useState } from "react"
+import {PostContext} from '../App';
 
-const NewPost = ({ posts, setPosts, username }) => {
-    const [content, setContent] = useState()
-    const image = useRef()
+const NewPost = ({ username }) => {
+    const dispatch = React.useContext(PostContext);
+
+    const [content, setContent] = React.useState()
+    const image = React.useRef()
 
     const handleChangeMessage = ({ target: { value } }) => {
         setContent(value)
@@ -17,8 +20,10 @@ const NewPost = ({ posts, setPosts, username }) => {
             date: new Date()
         }, ...posts])
 
-        setContent("")
-        image.current.value = ""
+        dispatch({type:"CRIAR_POST", payload: NewPost})
+
+        setContent("");
+        image.current.value = "";
     }
 
     return (

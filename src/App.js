@@ -2,19 +2,25 @@ import React, { useState } from "react"
 import Header from "./components/Header"
 import NewPost from "./components/NewPost"
 import Feed from "./components/Feed"
+import reducer from "./reducer"
+import Post from "./components/Post"
+
+export const UserContext = React.createContext();
+export const [username, setUsername] = useState("Duardo")
+export const [posts, setPosts] = React.useReducer(reducer, {posts:[]});
 
 const App = () => {
-  const [username, setUsername] = useState("Duardo")
-  const [posts, setPosts] = useState([])
 
-  console.log(posts)
+  const [state, dispatch] = React.useReducer(reducer, {posts:[]})
 
   return (
-    <>
+    <UserContext.Provider value={username}>
       <Header username={username} setUsername={setUsername} />
-      <NewPost posts={posts} setPosts={setPosts} username={username} />
-      <Feed posts={posts} />
-    </>
+        <PostContext.Provider value={dispatch}>
+          
+        </PostContext.Provider>
+      <Feed posts={state.posts} />
+    </UserContext.Provider>
   )
 }
 
